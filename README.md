@@ -1,4 +1,4 @@
-# Projeto: Plataforma de Gerenciamento de TC
+# Projeto: Plataforma de Gerenciamento de TCC
 Este projeto tem como objetivo desenvolver uma plataforma web para centralizar e otimizar o processo de orientação e avaliação dos Trabalhos de Conclusão de Curso (TCC).
 
 ## Visão Geral
