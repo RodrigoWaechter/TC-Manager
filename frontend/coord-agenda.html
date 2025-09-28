@@ -3,6 +3,83 @@
 
 <head>
     <meta charset="utf-8">
+    <title>Calendário Dinâmico</title>
+    <style>
+        /* --- Novo Estilo para a Tag de Tarefa --- */
+        .tag-tarefa {
+            background-color: #4a90e2;
+            color: #ffffff;
+            font-size: 0.75em;
+            border-radius: 4px;
+            white-space: normal;
+            width: 90%;
+        }
+
+        #calendar {
+            border: 1px solid #4a90e2;
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: rgba(0, 0, 0, 0.16) 0px 3px 6px, rgba(0, 0, 0, 0.23) 0px 3px 6px;
+            padding: 0;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 5px;
+            background-color: #007bff;
+            color: #ffffff;
+            font-weight: 900;
+            border-bottom: 1px solid #3a4669;
+            border-radius: 5px 5px 0 0;
+            text-transform: capitalize;
+        }
+
+        .header button {
+            background: none;
+            color: #ccc;
+            font-size: 18px;
+            font-weight: 900;
+            cursor: pointer;
+            padding: 1%;
+            border-radius: 10px;
+            border: none;
+        }
+
+        .header button:hover {
+            background-color: #f1f1f136;
+            color: #fff;
+        }
+
+        .weekdays,
+
+        #days {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            padding: 1%;
+            text-align: center;
+            color: #000000;
+        }
+
+        .weekdays div {
+            font-weight: bold;
+            padding: 15%;
+            color: #000000;
+        }
+
+        #days div {
+            padding: 30%;
+            cursor: pointer;
+            border-radius: 10%;
+            transition: background-color 0.3s, color 0.3s, transform 0.2s;
+        }
+
+        #days div.active {
+            background-color: #ff8888;
+            color: #fff;
+        }
+    </style>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title></title>
     <!-- Bootstrap e ícones -->
@@ -56,8 +133,7 @@
                 <div class="dropdown">
                     <button class="btn btn-secondary dropdown-toggle d-flex align-items-center gap-2" type="button"
                         id="usuarioDropdown" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-person-circle"></i>
-                        <span id="nome-usuario">Carregando...</span>
+                        <i class="bi bi-person-circle"></i> Jones
                     </button>
                     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="usuarioDropdown">
                         <li><a class="dropdown-item" href="#">Perfil</a></li>
@@ -69,121 +145,200 @@
         </div>
 
         <!-- Conteúdo principal -->
-        <div id="conteudo">
-            <table class="table table-bordered text-center align-middle">
-                <thead>
-                    <tr>
-                        <th colspan="4" class="text-white text-start fs-5 bg-primary">Rastreador de Tarefas</th>
-                    </tr>
-                    <tr class="bg-info text-dark">
-                        <th style="width: 35%;">Aluno</th>
-                        <th style="width: 25%;">Orientador</th>
-                        <th style="width: 20%;">Status</th>
-                        <th style="width: 20%;">Banca</th>
-                    </tr>
-                </thead>
-                <tbody id="tabela-agenda-body">
-                    <tr>
-                        <td colspan="4"></td>
-                    </tr>
-                    <tr>
-                        <td colspan="4"></td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="row">
+            <div id="rastreador-tarefas" class="col-md-4">
+                <table class="table table-bordered align-middle">
+                    <thead>
+                        <tr>
+                            <th colspan="2" class="text-white text-start fs-5 bg-primary">Rastreador de Tarefas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="nome-tarefa">1. Entrega da Proposta</td>
+                            <td><input type="date" class="form-control" name="1"></td>
+                        </tr>
+                        <tr>
+                            <td class="nome-tarefa">2. Retorno da Proposta</td>
+                            <td><input type="date" class="form-control" name="2"></td>
+                        </tr>
+                        <tr>
+                            <td class="nome-tarefa">3. Entrega da Reelaboração</td>
+                            <td><input type="date" class="form-control" name="3"></td>
+                        </tr>
+                        <tr>
+                            <td class="nome-tarefa">4. Retorno da Reelaboração</td>
+                            <td><input type="date" class="form-control" name="4"></td>
+                        </tr>
+                        <tr>
+                            <td class="nome-tarefa">5. Entrega do TCC I</td>
+                            <td><input type="date" class="form-control" name="5"></td>
+                        </tr>
+                        <tr>
+                            <td class="nome-tarefa">6. Retorno da do TCC I</td>
+                            <td><input type="date" class="form-control" name="6"></td>
+                        </tr>
+                        <tr>
+                            <td class="nome-tarefa">7. Entrega do TCC II</td>
+                            <td><input type="date" class="form-control" name="7"></td>
+                        </tr>
+                        <tr>
+                            <td class="nome-tarefa">8. Retorno do TCC II</td>
+                            <td><input type="date" class="form-control" name="8"></td>
+                        </tr>
+                        <tr>
+                            <td class="nome-tarefa">9. Entrega da Proposta</td>
+                            <td><input type="date" class="form-control" name="9"></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div id="calendar" class="col-md-8">
+                <div class="header">
+                    <button id="prev-month">&lt;</button>
+                    <div id="month-year"></div>
+                    <button id="next-month">&gt;</button>
+                </div>
+
+                <div class="weekdays">
+                    <div>Dom</div>
+                    <div>Seg</div>
+                    <div>Ter</div>
+                    <div>Qua</div>
+                    <div>Qui</div>
+                    <div>Sex</div>
+                    <div>Sáb</div>
+                </div>
+
+                <div id="days"></div>
+            </div>
+
         </div>
-    </div>
 
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
+        <!-- Scripts -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+        <script>
+            const calendar = document.getElementById('calendar');
+            const monthYear = document.getElementById('month-year');
+            const daysContainer = document.getElementById('days');
+            const prevMonthBtn = document.getElementById('prev-month');
+            const nextMonthBtn = document.getElementById('next-month');
 
-        // Calendário
-        const fp = flatpickr("#datepicker", {
-            onChange: (dates, dateStr) => console.log("Data selecionada:", dateStr),
-            positionElement: document.getElementById('calendarBtn'),
-            allowInput: true
-        });
-        document.getElementById('calendarBtn').addEventListener('click', () => fp.open());
-    </script>
-    <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            carregarNomeUsuario();
-            carregarDadosAgenda();
-        });
+            let currentDate = new Date();
 
-        function carregarNomeUsuario() {
-            const userInfo = JSON.parse(localStorage.getItem('userInfo'));
-            const nomeUsuarioEl = document.getElementById('nome-usuario');
+            function renderCalendar(date) {
 
-            if (userInfo && userInfo.nome) {
-                nomeUsuarioEl.textContent = userInfo.nome;
-            } else {
-                nomeUsuarioEl.textContent = 'Usuário';
+                const year = date.getFullYear();
+                const month = date.getMonth();
+                const today = new Date();
+                monthYear.textContent = `${date.toLocaleString('pt-BR', { month: 'long' })} ${year}`;
+                const firstDayOfMonth = new Date(year, month, 1).getDay();
+                const lastDateOfMonth = new Date(year, month + 1, 0).getDate();
+                daysContainer.innerHTML = '';
+
+                for (let i = 0; i < firstDayOfMonth; i++) {
+                    daysContainer.innerHTML += '<div></div>';
+                }
+
+                for (let i = 1; i <= lastDateOfMonth; i++) {
+                    const dayElement = document.createElement('div');
+                    dayElement.textContent = i;
+
+                    // Adiciona o atributo de dados para que o JS possa encontrar o dia.
+                    dayElement.setAttribute('data-day', i);
+
+                    if (year === today.getFullYear() && month === today.getMonth() && i === today.getDate()) {
+                        dayElement.classList.add('active');
+                    }
+                    // Adicione esta regra para alinhar o conteúdo verticalmente:
+                    dayElement.style.display = 'flex';
+                    dayElement.style.flexDirection = 'column';
+                    dayElement.style.alignItems = 'center';
+
+                    const dayOfWeek = new Date(year, month, i).getDay();
+
+                    if (dayOfWeek === today.getDay()) {
+                        dayElement.classList.add('highlight');
+                    }
+                    daysContainer.appendChild(dayElement);
+
+
+                    daysContainer.appendChild(dayElement);
+                }
+                adicionarTagsNoCalendario();
+
             }
-        }
 
-        async function carregarDadosAgenda() {
-            const token = localStorage.getItem('authToken');
-            const tbody = document.getElementById('tabela-agenda-body');
+            prevMonthBtn.addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() - 1);
+                renderCalendar(currentDate);
 
-            tbody.innerHTML = '<tr><td colspan="4">Carregando dados...</td></tr>';
+            });
 
-            // verificação de segurança: se não há token, redireciona para o login
-            if (!token) {
-                window.location.href = 'index.html'
-                return;
-            }
+            nextMonthBtn.addEventListener('click', () => {
+                currentDate.setMonth(currentDate.getMonth() + 1);
+                renderCalendar(currentDate);
+            });
 
-            try {
-                const response = await fetch('http://localhost:3000/coordenador/agenda', {
-                    method: 'GET',
-                    headers: {
-                        'Authorization': `Bearer ${token}`,
-                        'Content-Type': 'application/json'
+            renderCalendar(currentDate);
+
+            // Adicione esta função ao seu bloco <script>
+            function adicionarTagsNoCalendario() {
+                // Limpa as tags existentes para evitar duplicidade
+                document.querySelectorAll('.tag-tarefa').forEach(tag => tag.remove());
+
+                const mesDoCalendario = currentDate.getMonth();
+                const anoDoCalendario = currentDate.getFullYear();
+                const linhasDeTarefa = document.querySelectorAll('#rastreador-tarefas tbody tr');
+
+                // 2. Loop pelas tarefas e insere a tag no DIV correto
+                linhasDeTarefa.forEach(linha => {
+                    const nomeTarefaCompleto = linha.querySelector('.nome-tarefa').textContent.trim();
+                    const inputData = linha.querySelector('input[type="date"]').value;
+
+                    if (inputData) {
+                        const data = new Date(inputData + 'T00:00:00');
+                        const dia = data.getDate();
+                        const mes = data.getMonth();
+                        const ano = data.getFullYear();
+
+                        // *** NOVA LÓGICA DE EXTRAÇÃO ***
+                        // 1. Encontra o primeiro ponto (o separador do número)
+                        const indexPonto = nomeTarefaCompleto.indexOf('.');
+                        // 2. Pega o número e o ponto (ex: '1.')
+                        const numeroDaTarefa = nomeTarefaCompleto.substring(0, indexPonto); // Pára antes do ponto                        // *******************************
+
+
+                        // Verifica se a data da tarefa corresponde ao mês e ano exibidos
+                        if (mes === mesDoCalendario && ano === anoDoCalendario) {
+
+                            const diaCell = document.querySelector(`#days div[data-day="${dia}"]`);
+
+                            if (diaCell) {
+                                const tag = document.createElement('div');
+                                tag.classList.add('tag-tarefa');
+
+                                // ATRIBUIÇÃO MODIFICADA: Usa apenas o número + ponto
+                                tag.textContent = numeroDaTarefa;
+
+                                diaCell.appendChild(tag);
+                            }
+                        }
                     }
                 });
-
-                // se token for inválido ou expirado
-                if (!response.ok) {
-                    // limpa o armazenamento e redireciona para o login
-                    localStorage.clear();
-                    window.location.href = 'index.html'
-                    return;
-                }
-
-                const trabalhos = await response.json();
-
-                // limpa a mensagem de "Carregando..."
-                tbody.innerHTML = '';
-
-                if (trabalhos.length === 0) {
-                    tbody.innerHTML = '<tr><td colspan="4">Nenhum trabalho encontrado.</td></tr>';
-                } else {
-                    trabalhos.forEach(trabalho => { 
-                        const row = document.createElement('tr');
-
-                        row.innerHTML = `
-                            <td>${trabalho.nome_aluno}</td>
-                            <td>${trabalho.nome_orientador}</td>
-                            <td><span class="badge bg-primary">${trabalho.status}</span></td>
-                            <td>
-                                <button class="btn btn-info btn-sm">
-                                    <i class="bi bi-calendar-plus"></i> Agendar
-                                </button>
-                            </td>
-                        `;
-                        tbody.appendChild(row);
-                    });
-                }
-            } catch (error) {
-                console.error("Err oao buscar dados da agenda:", error);
-                tbody.innerHTML = '<tr><td colspan="4" class="text-danger">Falha ao carregar os dados. Verifique a conexão com o servidor.</td></tr>'
             }
-        }
+            document.addEventListener('DOMContentLoaded', () => {
+                const inputsDeData = document.querySelectorAll('#rastreador-tarefas input[type="date"]');
+                inputsDeData.forEach(input => {
+                    input.addEventListener('change', () => {
+                        // Atualiza as tags toda vez que uma data é inserida ou alterada
+                        adicionarTagsNoCalendario();
+                    });
+                });
+            });
 
-    </script>
+        </script>
 </body>
 
 </html>
