@@ -32,3 +32,77 @@ table th {
     background-color: #232ab9;
     color: white;
 }
+
+.btn-salvar {
+    background-color: #649efc;
+    color: white;
+}
+
+.btn-salvar:hover {
+    background-color: #f1f4fc36;
+    color: #fff;
+}
+
+/* Aluno e Orientador*/
+.dadosTabela {
+    text-align: left !important;
+    color: #333;
+    font-weight: 400;
+    background-color: transparent !important;
+}
+
+/* 2. Estilo para as Datas das tabelas*/
+.dataTabela {
+    font-weight: 400;
+    font-size: 0.95em;
+    background-color: transparent !important;
+}
+
+/* 3. Estilo para o Status (Cria um visual de "badge" ou etiqueta) */
+.statusTabela {
+    font-weight: bold;
+    border-radius: 5px;
+    font-size: 0.85em;
+    display: inline-block;
+    width: 90%;
+}
+
+/* 4. Estilo para o Link/Ação (Avaliar) */
+.linkAvaliar {
+    font-weight: bold;
+    color: #007bff;
+    cursor: pointer;
+    text-decoration: underline;
+    transition: color 0.2s;
+    background-color: transparent !important;
+}
+
+.linkAvaliar:hover {
+    color: #0056b3;
+}
+
+/* Regra de Correção para garantir que os THs na tbody se comportem como TD em termos de background */
+tbody th {
+    background-color: transparent !important;
+    vertical-align: middle;
+}
+
+.status-pendente {
+    background-color: #ffc107 !important;
+    color: #343a40 !important;
+}
+
+.status-aprovado {
+    background-color: #28a745 !important;
+    color: #fff !important;
+}
+
+.status-reprovado {
+    background-color: #dc3545 !important;
+    color: #fff !important;
+}
+
+.status-avaliacao {
+    background-color: #007bff !important;
+    color: #fff !important;
+}
